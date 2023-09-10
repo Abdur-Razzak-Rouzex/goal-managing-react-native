@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import { Button, StyleSheet, TextInput, View } from "react-native";
+import { Button, Modal, StyleSheet, TextInput, View } from "react-native";
 
-const GoalInputComponent = ({ addGoalHandler }) => {
+const GoalInputComponent = ({
+  addGoalHandler,
+  isModalVisible,
+  isShowModal,
+}) => {
   const [enteredGoalText, setEnteredGoalText] = useState("");
 
   const goalInputHandler = (enteredText) => {
@@ -12,16 +16,26 @@ const GoalInputComponent = ({ addGoalHandler }) => {
     addGoalHandler(enteredGoalText);
     setEnteredGoalText("");
   };
+
+  const handleCloseModal = () => {
+    isShowModal(false);
+  };
+
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.TextInput}
-        placeholder="Your goal!"
-        onChangeText={goalInputHandler}
-        value={enteredGoalText}
-      />
-      <Button title="Add Goal" onPress={goalHandler} />
-    </View>
+    <Modal visible={isModalVisible} animationType="slide">
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Your goal!"
+          onChangeText={goalInputHandler}
+          value={enteredGoalText}
+        />
+        <View style={styles.buttonContainer}>
+          <Button title="Add Goal" onPress={goalHandler} />
+          <Button title="Cancel" onPress={handleCloseModal} />
+        </View>
+      </View>
+    </Modal>
   );
 };
 
@@ -30,8 +44,8 @@ export default GoalInputComponent;
 const styles = StyleSheet.create({
   inputContainer: {
     flex: 1,
-    justifyContent: "space-between",
-    flexDirection: "row",
+    padding: 10,
+    justifyContent: "center",
     alignItems: "center",
     marginBottom: 24,
     borderBottomWidth: 1,
@@ -40,8 +54,13 @@ const styles = StyleSheet.create({
   TextInput: {
     borderWidth: 1,
     borderColor: "#ccc",
-    width: "70%",
-    marginRight: 8,
+    width: "100%",
     padding: 8,
+  },
+  buttonContainer: {
+    justifyContent: "center",
+    gap: 5,
+    flexDirection: "row",
+    marginTop: 10,
   },
 });

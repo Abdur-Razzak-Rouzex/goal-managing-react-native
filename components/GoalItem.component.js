@@ -7,11 +7,11 @@ const GoalItemComponent = ({ text, id, onDelete }) => {
   };
 
   return (
-    <Pressable onPress={deleteHandler}>
-      <View style={styles.goalItem}>
+    <View style={styles.goalItem}>
+      <Pressable android_ripple={{ color: "#5aaddd" }} onPress={deleteHandler}>
         <Text style={styles.goalText}>{text}</Text>
-      </View>
-    </Pressable>
+      </Pressable>
+    </View>
   );
 };
 
@@ -20,11 +20,11 @@ export default GoalItemComponent;
 const styles = StyleSheet.create({
   goalItem: {
     margin: 8,
-    padding: 8,
     borderRadius: 6,
     backgroundColor: "#5e0acc",
   },
   goalText: {
     color: "white",
+    padding: 8,
   },
 });
